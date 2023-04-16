@@ -11,7 +11,7 @@ import Mailjet from 'node-mailjet';
 import { UsersInstance } from '../models/userModel';
 const accountSid = 'ACcfd4392f3c289e88c8964e1ab37d261f';
 const authToken = '9625c1ac2f619d90dc4f4b9022329982';
-const client = require('twilio')(accountSid, authToken);
+
 import axios from 'axios';
 import { AllUserInstance } from '../models/user';
 
