@@ -1,0 +1,6 @@
+/node_modules
+package-lock.json
+.env
+CoinData.sqlite
+todo.md
+docker-compose.yml
