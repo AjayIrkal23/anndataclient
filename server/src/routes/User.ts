@@ -8,7 +8,7 @@ import Message from '../controllers/Message';
 
 const router = express.Router();
 
-router.post('/hello', (req, res, next) => res.status(200).json({ message: 'hello vaiii' }));
+router.get('/hello', (req, res, next) => res.status(200).json({ message: 'hello vaiii' }));
 router.post('/signUp', UserData.signUp);
 router.post('/verifyOtp', UserData.verifyOtp);
 router.post('/signIn', UserData.signIn);
@@ -27,7 +27,7 @@ router.post('/payment', authenticate, UserData.Payment);
 router.post('/conversation/add', Conversation.newConversation);
 router.post('/conversation/get', Conversation.getConversation);
 router.post('/conversation/All', Conversation.getAllConversation);
-
+router.post('/replyBot', Message.replyMessage);
 router.post('/message/add', Message.newMessage);
 
 router.get('/message/get/:id', Message.getMessage);
