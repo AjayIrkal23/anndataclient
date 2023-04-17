@@ -33,16 +33,21 @@ const getMessage = async (req: Request, res: Response, next: NextFunction) => {
 
 const replyMessage = async (req: Request, res: Response, next: NextFunction) => {
 	const { button, mobile, waNumber } = req.body;
+
 	try {
-		await axios
-			.get(
-				`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=9538513924&v=1.1&format=json&msg_type=TEXT&method=SENDMESSAGE&msg=Please+verify+your+number.+OTP+is+${button.text}${mobile}${waNumber}%2C+Please+do+not+share+this+to+anyone+else.%0ARegards&isTemplate=true&header=Number+Verification&footer=Aandata.Guru+Team`
-			)
-			.then((resp) => {
-				res.status(200).json({ message: 'success' });
-			});
+		if (mobile) {
+			await axios
+				.get(
+					`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=9538513924&v=1.1&format=json&msg_type=TEXT&method=SENDMESSAGE&msg=Please+verify+your+number.+OTP+is+${button.text}${mobile}${waNumber}%2C+Please+do+not+share+this+to+anyone+else.%0ARegards&isTemplate=true&header=Number+Verification&footer=Aandata.Guru+Team`
+				)
+				.then((resp) => {
+					res.status(200).json({ message: 'success' });
+				});
+		} else {
+			res.status(500).json({ message: 'Not success' });
+		}
 	} catch (error) {
-		return res.status(500).json({ message: error });
+		return res.status(500).json({ message: 'Not success', error });
 	}
 };
 
