@@ -44,7 +44,7 @@ const Marketing3 = ({ setPhaseThree, setProgress }) => {
       data1.append("name", file.name);
       data1.append("department", user.email);
       data1.append("file", file);
-
+      toast.loading("Uploading File");
       await axios
         .post(`https://react-sop.onrender.com/file/upload`, data1)
         .then(async (res) => {
@@ -62,6 +62,7 @@ const Marketing3 = ({ setPhaseThree, setProgress }) => {
               { headers: headers }
             )
             .then((response) => {
+              toast.dismiss();
               toast.success("File Uploaded Successfully");
               setProgress(60);
               setPhaseThree(true);

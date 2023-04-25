@@ -358,7 +358,7 @@ const login = () => {
                 <div>
                   <div className="w-full">
                     <p className="text-gray-600 italic mb-2 text-center">
-                      Enter The Otp Sent To Email
+                      Enter The Otp Sent To Whatsapp
                     </p>
                     <div className="w-full flex justify-center items-center">
                       <input
@@ -401,7 +401,7 @@ const login = () => {
                   </p>
                   <p className="text-gray-600 italic mb-2">
                     {" "}
-                    Enter Your Email to Reset Password
+                    Enter Your Mobile Number to Reset Password
                   </p>
                   <form
                     onSubmit={handlePasswordChange}

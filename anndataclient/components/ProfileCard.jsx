@@ -57,16 +57,16 @@ const ProfileCard = ({ item }) => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex space-x-6  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0">
+                      <div className="flex space-x-8  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0 ">
                         <div className="md:ml-12 text-[#29ABE2]">
                           <div className="flex justify-center w-full">
                             <Tv />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            4
+                            Role
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
+                            {item.role}
                           </p>
                         </div>
                         <div className=" text-[#29ABE2]">
@@ -74,21 +74,10 @@ const ProfileCard = ({ item }) => {
                             <Point />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            6
+                            Industry
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
-                          </p>
-                        </div>
-                        <div className=" text-[#29ABE2]">
-                          <div className="flex justify-center w-full">
-                            <Thumbs />
-                          </div>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            3
-                          </p>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Endorsements
+                            {item.industry}
                           </p>
                         </div>
                       </div>
@@ -100,30 +89,6 @@ const ProfileCard = ({ item }) => {
                     </div>
                     <div>
                       <div className="flex justify-around md:text-sm md:flex-row flex-col text-xs">
-                        <div className="flex text-green-600 space-x-1 items-center gap-2">
-                          <Check />
-                          <p className="tracking-wide text-gray-700 ">
-                            <span className="font-bold">Role</span> -{" "}
-                            <span className="text-gray-600 font-semibold italic">
-                              {" "}
-                              {item.role}
-                            </span>
-                          </p>
-                        </div>
-                        <div className="flex text-green-600 space-x-1 items-center gap-2">
-                          <Check />
-                          <p className="tracking-wide text-gray-700 ">
-                            <span className="font-bold font-sans">
-                              Industry
-                            </span>{" "}
-                            -{" "}
-                            <span className="text-gray-600 font-semibold italic">
-                              {" "}
-                              {item.industry}
-                            </span>
-                          </p>
-                        </div>
-
                         {item?.userType && (
                           <div className="flex text-green-600 space-x-1 items-center gap-2">
                             <Check />
@@ -187,16 +152,16 @@ const ProfileCard = ({ item }) => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex space-x-6  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0">
+                      <div className="flex space-x-8  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0">
                         <div className="md:ml-12 text-[#29ABE2]">
                           <div className="flex justify-center w-full">
                             <Tv />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            4
+                            Role
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
+                            {item.role}
                           </p>
                         </div>
                         <div className=" text-[#29ABE2]">
@@ -204,21 +169,10 @@ const ProfileCard = ({ item }) => {
                             <Point />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            6
+                            Industry
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
-                          </p>
-                        </div>
-                        <div className=" text-[#29ABE2]">
-                          <div className="flex justify-center w-full">
-                            <Thumbs />
-                          </div>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            3
-                          </p>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Endorsements
+                            {item.industry}
                           </p>
                         </div>
                       </div>
@@ -301,16 +255,16 @@ const ProfileCard = ({ item }) => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex space-x-6  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0">
+                      <div className="flex space-x-8  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0">
                         <div className="md:ml-12 text-[#29ABE2]">
                           <div className="flex justify-center w-full">
                             <Tv />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            4
+                            Role
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
+                            {item.role}
                           </p>
                         </div>
                         <div className=" text-[#29ABE2]">
@@ -318,21 +272,10 @@ const ProfileCard = ({ item }) => {
                             <Point />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            6
+                            Industry
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
-                          </p>
-                        </div>
-                        <div className=" text-[#29ABE2]">
-                          <div className="flex justify-center w-full">
-                            <Thumbs />
-                          </div>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            3
-                          </p>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Endorsements
+                            {item.industry}
                           </p>
                         </div>
                       </div>
@@ -415,16 +358,16 @@ const ProfileCard = ({ item }) => {
                         </div>
                       </div>
 
-                      <div className="flex space-x-6  border-b border-b-black/10 md:border-none justify-center  pb-4 md:pb-0">
+                      <div className="flex space-x-8  border-b border-b-black/10 md:border-none justify-center pb-4 md:pb-0">
                         <div className="md:ml-12 text-[#29ABE2]">
                           <div className="flex justify-center w-full">
                             <Tv />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            4
+                            Role
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
+                            {item.role}
                           </p>
                         </div>
                         <div className=" text-[#29ABE2]">
@@ -432,21 +375,10 @@ const ProfileCard = ({ item }) => {
                             <Point />
                           </div>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            6
+                            Industry
                           </p>
                           <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Meetings
-                          </p>
-                        </div>
-                        <div className=" text-[#29ABE2]">
-                          <div className="flex justify-center w-full">
-                            <Thumbs />
-                          </div>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            3
-                          </p>
-                          <p className="text-[12px] leading-4 text-center italic text-gray-600 font-semibold">
-                            Endorsements
+                            {item.industry}
                           </p>
                         </div>
                       </div>

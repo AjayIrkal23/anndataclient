@@ -40,6 +40,8 @@ const ModalComponent = ({
   setPhaseFour,
   phasefive,
   setPhasefive,
+  phaseSix,
+  setPhaseSix,
 }) => {
   const { user } = useContext(AuthContext);
 
@@ -179,7 +181,27 @@ const ModalComponent = ({
                   <div>
                     {phaseThree ? (
                       phaseFour ? (
-                        <Mentor4 setOpen={setOpen} />
+                        <div>
+                          {phasefive ? (
+                            <div>
+                              {phaseSix ? (
+                                <Mentor4 setOpen={setOpen} />
+                              ) : (
+                                <Member2
+                                  setProgress={setProgress}
+                                  p="90"
+                                  setPhaseTwo={setPhaseSix}
+                                />
+                              )}
+                            </div>
+                          ) : (
+                            <Member1
+                              setPhaseOne={setPhasefive}
+                              setProgress={setProgress}
+                              p="80"
+                            />
+                          )}
+                        </div>
                       ) : (
                         <Mentor5
                           setPhaseFour={setPhaseFour}

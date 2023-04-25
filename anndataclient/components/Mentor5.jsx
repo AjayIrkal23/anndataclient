@@ -35,6 +35,7 @@ const Mentor5 = ({ setPhaseFour, setProgress }) => {
       data.append("name", file.name);
       data.append("department", user.email);
       data.append("file", file);
+      toast.loading("Uploading File");
 
       await axios
         .post(`https://react-sop.onrender.com/file/upload`, data)
@@ -52,8 +53,9 @@ const Mentor5 = ({ setPhaseFour, setProgress }) => {
               { headers: headers }
             )
             .then((response) => {
+              toast.dismiss();
               toast.success("Profile Pic Uploaded Successfully");
-              setProgress(100);
+              setProgress(78);
               setPhaseFour(true);
             })
             .catch((error) => {

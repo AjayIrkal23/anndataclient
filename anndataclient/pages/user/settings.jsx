@@ -205,62 +205,21 @@ const settings = () => {
                         </p>
                       </div>
                       <p className="text-center font-semibold font-nunito mb-4">
-                        Roles
+                        Role
                       </p>
                       <div className="flex space-x-3 text-xs text-[#29ABE2]">
                         <p className="border border-[#29ABE2] px-3 py-1 rounded-sm  hover:bg-[#29ABE2] hover:text-white transition-all duration-200 ease-in-out cursor-default">
-                          {profile?.interest || "All"}
+                          {profile?.role}
                         </p>
                       </div>
-                      {user?.type == "Member" && (
-                        <div>
-                          {" "}
-                          <p className="text-center font-semibold font-nunito my-4">
-                            Farming Type
-                          </p>
-                          <div className="flex space-x-3 text-xs text-[#29ABE2] border-b pb-6">
-                            <p className="border border-[#29ABE2] px-3 py-1 rounded-sm  hover:bg-[#29ABE2] hover:text-white transition-all duration-200 ease-in-out cursor-default">
-                              {profile?.farmingType}
-                            </p>
-                          </div>
-                          <button className="bg-[#29ABE2] mt-5 text-white rounded-md text-sm py-1 px-4 hover:scale-105 transition-all duration-200 ease-in-out  ">
-                            Change Preference
-                          </button>
-                        </div>
-                      )}
-                      {user?.type == "Marketing" && (
-                        <div>
-                          {" "}
-                          <p className="text-center font-semibold font-nunito my-4">
-                            User Type
-                          </p>
-                          <div className="flex space-x-3 text-xs justify-center text-[#29ABE2] border-b pb-6">
-                            <p className="border border-[#29ABE2] px-3 py-1 rounded-sm  hover:bg-[#29ABE2] hover:text-white transition-all duration-200 ease-in-out cursor-default">
-                              {profile?.usertype}
-                            </p>
-                          </div>
-                          <button className="bg-[#29ABE2] mt-5 text-white rounded-md text-sm py-1 px-4 hover:scale-105 transition-all duration-200 ease-in-out  ">
-                            Change Preference
-                          </button>
-                        </div>
-                      )}
-                      {user?.type == "Mentor" && (
-                        <div>
-                          {" "}
-                          <p className="text-center font-semibold font-nunito my-4">
-                            Funding Stage (Amount)
-                          </p>
-                          <div className="flex space-x-3 text-xs text-[#29ABE2]  justify-center border-b pb-6">
-                            <p className="border border-[#29ABE2] px-3 py-1  rounded-sm  hover:bg-[#29ABE2] hover:text-white transition-all duration-200 ease-in-out cursor-default">
-                              {profile?.fundingStage?.toLocaleString("en-US")}{" "}
-                              INR
-                            </p>
-                          </div>
-                          <button className="bg-[#29ABE2] mt-5 text-white rounded-md text-sm py-1 px-4 hover:scale-105 transition-all duration-200 ease-in-out  ">
-                            Change Preference
-                          </button>
-                        </div>
-                      )}
+                      <p className="text-center font-semibold font-nunito mt-6 mb-3">
+                        Industry
+                      </p>
+                      <div className="flex space-x-3 text-xs text-[#29ABE2]">
+                        <p className="border border-[#29ABE2] px-3 py-1 rounded-sm  hover:bg-[#29ABE2] hover:text-white transition-all duration-200 ease-in-out cursor-default">
+                          {profile?.industry}
+                        </p>
+                      </div>
                     </div>
                     <div></div>
                   </div>

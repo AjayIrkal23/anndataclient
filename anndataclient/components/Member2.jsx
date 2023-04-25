@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-const Member2 = ({ setPhaseTwo, setProgress }) => {
+const Member2 = ({ setPhaseTwo, setProgress, p }) => {
   const {
     register,
     handleSubmit,
@@ -30,12 +30,12 @@ const Member2 = ({ setPhaseTwo, setProgress }) => {
             role: value,
             email: user.email,
             type: user.type,
-            profileReady: "1",
+            profileReady: p ? "Done" : "1",
           },
           { headers: headers }
         )
         .then((response) => {
-          setProgress(50);
+          p ? setProgress(p) : setProgress(50);
           toast.dismiss();
           setPhaseTwo(true);
         })

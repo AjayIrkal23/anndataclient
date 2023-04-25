@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-const Member1 = ({ setProgress, setPhaseOne }) => {
+const Member1 = ({ setProgress, setPhaseOne, p }) => {
   const {
     register,
     handleSubmit,
@@ -28,16 +28,16 @@ const Member1 = ({ setProgress, setPhaseOne }) => {
         .put(
           `${process.env.NEXT_PUBLIC_URL}/api/updateUserDetails`,
           {
-            name: data.name,
+            name: p ? user.name : data.name,
             industry: value,
             email: user.email,
             type: user.type,
-            profileReady: "1",
+            profileReady: p ? "Done" : "1",
           },
           { headers: headers }
         )
         .then((response) => {
-          setProgress(25);
+          p ? setProgress(p) : setProgress(25);
           toast.dismiss();
           setPhaseOne(true);
         })
@@ -56,19 +56,21 @@ const Member1 = ({ setProgress, setPhaseOne }) => {
     <div className="flex flex-col p-2 w-[250px] md:w-auto h-[450px] overflow-scroll">
       <form action="" onSubmit={handleSubmit(handleUpload)}>
         <div className="flex justify-around my-3 gap-6">
-          <div className="flex flex-col">
-            <p className="text-sm text-gray-600 ml-0.5 mb-0.5 font-semibold text-center">
-              Name
-            </p>
-            <input
-              type="text"
-              {...register("name", { required: true })}
-              placeholder="Your Name"
-              className={`border text-gray-600 w-full placeholder:text-sm p-3 placeholder:text-center ${
-                errors.name && "border border-red-600"
-              } border-black/20 shadow-md py-1 outline-none text-sm`}
-            />
-          </div>
+          {!p && (
+            <div className="flex flex-col">
+              <p className="text-sm text-gray-600 ml-0.5 mb-0.5 font-semibold text-center">
+                Name
+              </p>
+              <input
+                type="text"
+                {...register("name", { required: true })}
+                placeholder="Your Name"
+                className={`border text-gray-600 w-full placeholder:text-sm p-3 placeholder:text-center ${
+                  errors.name && "border border-red-600"
+                } border-black/20 shadow-md py-1 outline-none text-sm`}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-around my-3 gap-6">

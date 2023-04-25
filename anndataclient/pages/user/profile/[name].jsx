@@ -85,26 +85,7 @@ const Name = () => {
                 {profile?.state}
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center p-1">
-              <div className="flex gap-1 ">
-                {" "}
-                <Image src="/calender.svg" width={20} height={20} alt="" />
-                <div>
-                  <p>5</p>
-                </div>
-              </div>
-              <p className="text-[9px] text-gray-600">Meetings</p>
-            </div>
-            <div className="flex flex-col justify-center items-center p-1">
-              <div className="flex gap-1">
-                {" "}
-                <Image src="/instruction.png" width={20} height={20} alt="" />
-                <div>
-                  <p>50+</p>
-                </div>
-              </div>
-              <p className="text-[9px] text-gray-600">Want to Meet</p>
-            </div>
+
             <div className="flex ml-auto mr-6 flex-col justify-center items-center p-1">
               <div className="flex gap-1 ">
                 {" "}
@@ -195,15 +176,43 @@ const Name = () => {
           </div>
           <div>
             <div className="py-6">
-              <p className="font-semibold px-4 text-gray-600 tracking-wide my-2  ">
-                Interest
-              </p>
-              <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
-                <p className="border border-[#29ABE2] px-3 py-0.5">
-                  {profile?.interest || profile?.usertype}
-                </p>
+              <div className="flex justify-center text-center ">
+                <div>
+                  {" "}
+                  <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
+                    Interest
+                  </p>
+                  <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
+                    <p className="border border-[#29ABE2] px-3 py-0.5">
+                      {profile?.interest || profile?.usertype}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  {" "}
+                  <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
+                    Role
+                  </p>
+                  <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
+                    <p className="border border-[#29ABE2] px-3 py-0.5">
+                      {profile?.role}
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  {" "}
+                  <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
+                    Interest
+                  </p>
+                  <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
+                    <p className="border border-[#29ABE2] px-3 py-0.5">
+                      {profile?.industry}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div className="flex justify-end  px-6 pb-6 ">
               <button
                 className="bg-[#29ABE2] text-white px-4 rounded-md shadow-md py-1 hover:scale-105 transition-all duration-200 ease-in-out"

@@ -12,6 +12,22 @@ import { MentorInstance } from '../models/mentor';
 import { MarketingInstance } from '../models/marketing';
 import { BankInstance } from '../models/bank';
 
+const generateMeeting = async () => {
+	const meetingDetails = {
+		topic: 'Aanndata.Guru Meeting ',
+		type: 2,
+		start_time: '2019-06-14T10: 21: 57',
+		agenda: 'Discuss between people connected to one another',
+		settings: { host_video: 'true', participant_video: 'true', join_before_host: 'False', mute_upon_entry: 'False', watermark: 'true', audio: 'voip', auto_recording: 'cloud' }
+	};
+
+	const headers: any = { authorization: `Bearer ${config.Token}`, 'content-type': 'application/json' };
+
+	await axios.post(`https://api.zoom.us/v2/users/me/meetings`, meetingDetails, { headers: headers }).then((res) => {
+		console.log(res);
+	});
+};
+
 const newConversation = async (req: Request, res: Response, next: NextFunction) => {
 	console.log('hello');
 	const id = uuidv4();
@@ -24,8 +40,8 @@ const newConversation = async (req: Request, res: Response, next: NextFunction) 
 			res.status(200).json({ Status: 'Exists', message: 'Conversation already Exists' });
 		} else {
 			let members = [senderId, receiverId];
-
 			const newConversation = await ConversationInstance.create({ id, members, Setype, ReType });
+			generateMeeting();
 			if (ReType == 'Member') {
 				const isUser = await UsersInstance.findOne({ where: { email: receiverId } });
 				if (isUser) {

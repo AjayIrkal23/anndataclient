@@ -67,7 +67,7 @@ export class UsersInstance extends Model<UsersAttributes> {
 	declare active: boolean;
 	declare profilePic?: string;
 	declare profileReady?: string;
-	declare aboutMe?: string;
+	declare aboutMe: string;
 	declare paid?: boolean;
 	declare role?: string;
 	declare industry?: string;

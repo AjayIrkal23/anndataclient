@@ -35,7 +35,8 @@ const Member5 = ({ setPhaseThree, setProgress }) => {
       data.append("name", file.name);
       data.append("department", user.email);
       data.append("file", file);
-
+      toast.loading("Uploading File");
+      toast.dismiss();
       await axios
         .post(`https://react-sop.onrender.com/file/upload`, data)
         .then(async (res) => {
@@ -52,6 +53,7 @@ const Member5 = ({ setPhaseThree, setProgress }) => {
               { headers: headers }
             )
             .then((response) => {
+              toast.dismiss();
               toast.success("Profile Pic Uploaded Successfully");
               setProgress(100);
               setPhaseThree(true);

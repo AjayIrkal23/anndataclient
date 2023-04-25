@@ -15,6 +15,9 @@ const POSTGRES_DATABASE = String(process.env.POSTGRES_DATABASE);
 const POSTGRES_PORT = Number(process.env.POSTGRES_PORT);
 const whatsapp_id = String(process.env.WHATSAPP_ID);
 const whatsapp_pass = String(process.env.WHATSAPP_PASSWORD);
+const Token = String(process.env.JWT_TOKEN);
+const Zoom_api = String(process.env.ZOOM_API_KEY);
+const Zoom_sec = String(process.env.ZOOM_SEC_KEY);
 
 const db = new Sequelize(POSTGRES_DATABASE, POSTGRES_USER, POSTGRES_PASSWORD, {
 	host: POSTGRES_HOST,
@@ -32,5 +35,8 @@ export const config = {
 	mj_secret_key,
 	subscribe_email_key,
 	whatsapp_id,
-	whatsapp_pass
+	whatsapp_pass,
+	Token,
+	Zoom_api,
+	Zoom_sec
 };

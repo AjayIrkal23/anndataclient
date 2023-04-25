@@ -32,6 +32,7 @@ const UserDashboard = (props) => {
   const [phaseThree, setPhaseThree] = useState(false);
   const [phaseFour, setPhaseFour] = useState(false);
   const [phasefive, setPhasefive] = useState(false);
+  const [phaseSix, setPhaseSix] = useState(false);
   const [notPaid, setNotPaid] = useState(false);
   const router = useRouter();
 
@@ -361,6 +362,8 @@ const UserDashboard = (props) => {
             after={after}
             setAfter={setAfter}
             setPhasefive={setPhasefive}
+            phaseSix={phaseSix}
+            setPhaseSix={setPhaseSix}
           />
         </div>
       )}

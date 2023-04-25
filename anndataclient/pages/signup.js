@@ -347,7 +347,7 @@ const signup = () => {
                 className="my-4"
               />
               <p className="text-gray-600 italic mb-2 text-center">
-                Enter The Otp Sent To Email
+                Enter The Otp Sent To Whatsapp
               </p>
               <div className="w-full flex justify-center items-center">
                 <input
@@ -362,10 +362,10 @@ const signup = () => {
                 className="bg-[#006ce6] px-8 py-1.5 text-white rounded-[5px] font-semibold shadow-lg shadow-slate-200 transition-all duration-300 ease-in-out hover:animate-pulse"
                 onClick={handleOtp}
               >
-                Verify Email
+                Verify Number
               </button>
               <p className="text-sm italic text-gray-500 my-2">
-                Check Your Spam/Junk folder in Email
+                Check Your Whatsapp Inbox
               </p>
             </div>
           </div>
