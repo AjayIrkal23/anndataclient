@@ -36,7 +36,7 @@ const Member5 = ({ setPhaseThree, setProgress }) => {
       data.append("department", user.email);
       data.append("file", file);
       toast.loading("Uploading File");
-      toast.dismiss();
+
       await axios
         .post(`https://react-sop.onrender.com/file/upload`, data)
         .then(async (res) => {

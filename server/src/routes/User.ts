@@ -21,6 +21,8 @@ router.post('/reqPass', UserData.changePassword);
 router.put('/updateUserDetails', UserData.updateUserDets);
 router.post('/refreshProfile', authenticate, UserData.refreshProfile);
 router.get('/getAllUsers', UserData.getAllUsers);
+router.get('/sendAI', Message.sendUsers);
+router.get('/startAI', Message.StartAI);
 router.post('/getSingleUser', authenticate, UserData.getSingleUser);
 router.get('/getAllFilter', authenticate, UserData.getAllFilter);
 router.post('/payment', authenticate, UserData.Payment);
@@ -29,7 +31,6 @@ router.post('/conversation/get', Conversation.getConversation);
 router.post('/conversation/All', Conversation.getAllConversation);
 router.post('/replyBot', Message.replyMessage);
 router.post('/message/add', Message.newMessage);
-
 router.get('/message/get/:id', Message.getMessage);
 
 export = router;

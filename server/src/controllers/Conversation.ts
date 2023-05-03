@@ -16,9 +16,8 @@ const generateMeeting = async () => {
 	const meetingDetails = {
 		topic: 'Aanndata.Guru Meeting ',
 		type: 2,
-		start_time: '2019-06-14T10: 21: 57',
 		agenda: 'Discuss between people connected to one another',
-		settings: { host_video: 'true', participant_video: 'true', join_before_host: 'False', mute_upon_entry: 'False', watermark: 'true', audio: 'voip', auto_recording: 'cloud' }
+		settings: { host_video: 'true', participant_video: 'true', join_before_host: 'true', mute_upon_entry: 'False', watermark: 'true', audio: 'voip', auto_recording: 'cloud' }
 	};
 
 	const headers: any = { authorization: `Bearer ${config.Token}`, 'content-type': 'application/json' };
@@ -41,7 +40,6 @@ const newConversation = async (req: Request, res: Response, next: NextFunction) 
 		} else {
 			let members = [senderId, receiverId];
 			const newConversation = await ConversationInstance.create({ id, members, Setype, ReType });
-			generateMeeting();
 			if (ReType == 'Member') {
 				const isUser = await UsersInstance.findOne({ where: { email: receiverId } });
 				if (isUser) {
