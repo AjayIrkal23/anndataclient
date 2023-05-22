@@ -1,3 +1,4 @@
+import { AllUserInstance } from './../models/user';
 import { MentorInstance } from './../models/mentor';
 import { AdminInstance } from './../models/superAdmin';
 import { BankInstance } from './../models/bank';
@@ -13,7 +14,6 @@ const accountSid = 'ACcfd4392f3c289e88c8964e1ab37d261f';
 const authToken = '9625c1ac2f619d90dc4f4b9022329982';
 
 import axios from 'axios';
-import { AllUserInstance } from '../models/user';
 
 const razorpay = require('razorpay');
 
@@ -545,6 +545,16 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
 	}
 };
 
+const getUsersTable = async (req: Request, res: Response, next: NextFunction) => {
+	const { email } = req.body;
+	try {
+		const Member = await AllUserInstance.findOne({ where: { email } });
+		res.status(200).json(Member);
+	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
 const SendNotPaid = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const Member = await UsersInstance.findAll({});
@@ -604,6 +614,29 @@ const Payment = async (req: Request, res: Response, next: NextFunction) => {
 			}
 			return res.status(200).json(order);
 		});
+	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
+const uploadDayTime = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { day, time, email } = req.body;
+
+		day.map(async (item: string, i: any) => {
+			if (i == 0) {
+				await AllUserInstance.update({ day1: day[i] }, { where: { email: email } });
+				await AllUserInstance.update({ Time1: time[i] }, { where: { email: email } });
+			} else if (i == 1) {
+				await AllUserInstance.update({ day2: day[i] }, { where: { email: email } });
+				await AllUserInstance.update({ Time2: time[i] }, { where: { email: email } });
+			} else if (i == 2) {
+				await AllUserInstance.update({ day3: day[i] }, { where: { email: email } });
+				await AllUserInstance.update({ Time3: time[i] }, { where: { email: email } });
+			}
+		});
+		await AllUserInstance.update({ ready: true }, { where: { email: email } });
+		return res.status(200).json('Success');
 	} catch (error) {
 		return res.status(500).json(error);
 	}
@@ -865,5 +898,7 @@ export default {
 	getAllFilter,
 	ChangeOldPassword,
 	changePassword,
-	Payment
+	Payment,
+	getUsersTable,
+	uploadDayTime
 };

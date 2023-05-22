@@ -47,7 +47,15 @@ ConversationInstance.init(
 			allowNull: false
 		},
 
+		messages: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
 		meetingTime: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		startingLink: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
@@ -60,14 +68,6 @@ ConversationInstance.init(
 			allowNull: true
 		},
 		finished: {
-			type: DataTypes.BOOLEAN,
-			allowNull: true
-		},
-		startingLink: {
-			type: DataTypes.STRING,
-			allowNull: true
-		},
-		messages: {
 			type: DataTypes.STRING,
 			allowNull: true
 		}

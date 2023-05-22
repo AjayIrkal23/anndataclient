@@ -1,5 +1,6 @@
 import { AuthContext } from "@/Contexts/Auth";
 import { setConversation } from "@/services/api";
+import { Modal } from "@mui/material";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,11 @@ const Name = () => {
   const name = router?.query?.name;
   const { user, person, setperson } = useContext(AuthContext);
   const [profile, setProfile] = useState();
+  const [timemap, setTimemap] = useState([]);
+  const [Day, setDayToMap] = useState([]);
+  const [timeSet, setTimeSet] = useState();
+  const [daySet, setDaySet] = useState();
+  const [open, setOpen] = useState(false);
   console.log(profile);
   const headers = {
     "Content-Type": "application/json",
@@ -22,10 +28,12 @@ const Name = () => {
     await setConversation({
       senderId: user?.email,
       receiverId: profile?.email,
+      meetingTime: timeSet,
+      meetingDate: daySet,
       ReType: name?.split(" ")[1],
       Setype: user?.type,
     });
-
+    setOpen(false);
     router.push({
       pathname: "/user/chat",
       query: {
@@ -33,6 +41,28 @@ const Name = () => {
         active: true,
       },
     });
+  };
+
+  useEffect(() => {
+    getReady();
+  }, []);
+
+  const getReady = async () => {
+    await axios
+      .post(
+        `${process.env.NEXT_PUBLIC_URL}/api/users/single`,
+        {
+          email: user.email,
+        },
+        { headers: headers }
+      )
+      .then(({ data }) => {
+        setDayToMap([data.day1, data.day2, data.day3]);
+        setTimemap([data.Time1, data.Time2, data.Time3]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   const getData = async () => {
@@ -202,7 +232,7 @@ const Name = () => {
                 <div>
                   {" "}
                   <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
-                    Interest
+                    Industry
                   </p>
                   <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
                     <p className="border border-[#29ABE2] px-3 py-0.5">
@@ -216,10 +246,66 @@ const Name = () => {
             <div className="flex justify-end  px-6 pb-6 ">
               <button
                 className="bg-[#29ABE2] text-white px-4 rounded-md shadow-md py-1 hover:scale-105 transition-all duration-200 ease-in-out"
-                onClick={getUser}
+                onClick={() => setOpen(true)}
               >
                 <p>Connect Now </p>
               </button>
+              <Modal open={open}>
+                <div className="absolute left-[50%] -translate-x-[50%] rounded-md   bg-white outline-none  top-[10%] p-4">
+                  <div className="flex flex-col items-center ">
+                    <div>
+                      <h1 className="text-gray-600 italic text-sm md:text-base px-3  font-semibold">
+                        Select Your Available Time and Day
+                      </h1>
+                      <p className="text-center py-4 text-gray-600 italic ">
+                        Select Time{" "}
+                      </p>
+                      <div className="flex gap-3 flex-wrap justify-center">
+                        {timemap.map((item) => (
+                          <div
+                            className={`text-sm hover:bg-blue-500 ${
+                              timeSet == item && "!bg-blue-500 !text-white"
+                            } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-blue-500 bg-white border shadow-md  cursor-pointer`}
+                            onClick={() => setTimeSet(item)}
+                          >
+                            <p>{item}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="text-gray-600 text-xs text-center py-4">
+                        Click On The Time To Select
+                      </p>
+
+                      <div>
+                        <p className="text-center py-4 text-gray-600 italic ">
+                          Select Day{" "}
+                        </p>
+                        <div className="flex gap-3 flex-wrap justify-center">
+                          {Day.map((item) => (
+                            <div
+                              className={`text-sm hover:bg-blue-500 ${
+                                daySet == item && "!bg-blue-500 !text-white"
+                              } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-blue-500 bg-white border shadow-md  cursor-pointer`}
+                              onClick={() => setDaySet(item)}
+                            >
+                              <p>{item}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <p className="text-gray-600 text-xs text-center py-4">
+                          Click On The Time To Select
+                        </p>
+                      </div>
+                      <p
+                        onClick={(e) => getUser()}
+                        className="bg-blue-500  text-white py-1.5 w-[100px] text-center mx-auto rounded-md shadow-md font-semibold hover:animate-pulse cursor-pointer mt-6 "
+                      >
+                        Confirm
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
             </div>
           </div>
         </div>

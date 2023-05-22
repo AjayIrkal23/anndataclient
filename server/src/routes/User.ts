@@ -32,5 +32,7 @@ router.post('/conversation/All', Conversation.getAllConversation);
 router.post('/replyBot', Message.replyMessage);
 router.post('/message/add', Message.newMessage);
 router.get('/message/get/:id', Message.getMessage);
+router.post('/users/single', UserData.getUsersTable);
+router.post('/users/uploadDayTime', UserData.uploadDayTime);
 
 export = router;

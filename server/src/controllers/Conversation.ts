@@ -31,7 +31,7 @@ const newConversation = async (req: Request, res: Response, next: NextFunction) 
 	console.log('hello');
 	const id = uuidv4();
 
-	const { Setype, receiverId, senderId, ReType } = req.body;
+	const { Setype, receiverId, senderId, ReType, meetingTime, meetingDate } = req.body;
 	try {
 		const exists = await ConversationInstance.findOne({ where: { members: { [Op.contains]: [receiverId, senderId] } } });
 
@@ -39,7 +39,7 @@ const newConversation = async (req: Request, res: Response, next: NextFunction) 
 			res.status(200).json({ Status: 'Exists', message: 'Conversation already Exists' });
 		} else {
 			let members = [senderId, receiverId];
-			const newConversation = await ConversationInstance.create({ id, members, Setype, ReType });
+			const newConversation = await ConversationInstance.create({ id, members, Setype, ReType, meetingTime, meetingDate });
 			if (ReType == 'Member') {
 				const isUser = await UsersInstance.findOne({ where: { email: receiverId } });
 				if (isUser) {

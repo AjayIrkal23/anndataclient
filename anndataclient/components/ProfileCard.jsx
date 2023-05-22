@@ -121,7 +121,10 @@ const ProfileCard = ({ item }) => {
                     <div className="flex md:items-center md:space-x-2 md:w-full flex-col md:flex-row">
                       <div className="flex items-center justify-center gap-4 mb-3 md:mb-0 border-b border-b-black/10 pb-2 md:pb-0 md:border-none ">
                         <img
-                          src={item.profilePic}
+                          src={
+                            item?.profilePic ||
+                            "https://assets.coffeemug.ai/assets/images/default-user.png"
+                          }
                           alt=""
                           className="w-14 h-14 rounded-full"
                         />

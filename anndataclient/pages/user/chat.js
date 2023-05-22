@@ -9,6 +9,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Blocks } from "react-loader-spinner";
+import { toast } from "react-toastify";
 
 const chat = () => {
   const [checked, setChecked] = useState(false);
@@ -19,8 +20,14 @@ const chat = () => {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
-  const { user, socket, person, conversation, setConversation } =
-    useContext(AuthContext);
+  const {
+    user,
+    socket,
+    person,
+    conversation,
+    setConversation,
+    newMessageFlag,
+  } = useContext(AuthContext);
   const data = router.query;
   const headers = {
     "Content-Type": "application/json",

@@ -69,7 +69,32 @@ const connections = () => {
             {connections?.length > 0 ? (
               <div className="flex flex-col space-y-4">
                 {connections?.map((item) => (
-                  <div>{item.id}</div>
+                  <div className="p-1 ">
+                    <div className="border rounded-md border-[#f57424]  py-4 px-6 shadow-md cursor-pointer">
+                      <p className="text-gray-600 font-semibold tracking-wide">
+                        Connection Id
+                      </p>
+                      <p className="text-sm italic text-gray-500">{item.id}</p>
+                      <div className="flex justify-between my-1">
+                        <div>
+                          <p className="text-gray-500 font-semibold">
+                            Meeting Time
+                          </p>
+                          <p className="italic text-gray-500 text-sm">
+                            {item?.meetingTime}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500 font-semibold">
+                            Meeting Day
+                          </p>
+                          <p className="italic text-gray-500 text-sm">
+                            {item?.meetingDate}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : (

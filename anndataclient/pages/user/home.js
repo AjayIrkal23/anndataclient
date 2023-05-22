@@ -34,6 +34,10 @@ const UserDashboard = (props) => {
   const [phasefive, setPhasefive] = useState(false);
   const [phaseSix, setPhaseSix] = useState(false);
   const [notPaid, setNotPaid] = useState(false);
+  const [ready, setReady] = useState(true);
+  const [time, setTime] = useState(false);
+  const [timeToSend, setTimeToSend] = useState([]);
+  const [dayToSend, setDayToSend] = useState([]);
   const router = useRouter();
 
   const {
@@ -46,6 +50,34 @@ const UserDashboard = (props) => {
     mainNav,
     setMainNav,
   } = useContext(AuthContext);
+
+  const SendData = async () => {
+    toast.dismiss();
+    if (timeToSend.length == 3 && dayToSend.length == 3) {
+      await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_URL}/api/users/uploadDayTime`,
+          {
+            email: user.email,
+            day: dayToSend,
+            time: timeToSend,
+          },
+          { headers: headers }
+        )
+        .then(({ data }) => {
+          setReady(true);
+          toast.success("Availability Time Uploaded");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      toast.error("Input Fields Not Selected");
+    }
+  };
+
+  const timemap = ["9:00 am", "12:00 pm", "3:00 pm", "6:00pm", "8:00 pm"];
+  const Day = ["Monday", "Tuesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
   const getUsersInArray = () => {
     let realUsers = [];
@@ -77,6 +109,45 @@ const UserDashboard = (props) => {
       }
     }
   }, [user]);
+
+  const addTime = (item) => {
+    if (timeToSend.length < 3 || timeToSend.includes(item)) {
+      if (!timeToSend.includes(item)) {
+        setTimeToSend([...timeToSend, item]);
+      } else {
+        let arr = [...timeToSend];
+        let index = arr.findIndex((value) => {
+          return value == item;
+        });
+
+        arr.splice(index, 1);
+        setTimeToSend(arr);
+        console.log(timeToSend);
+      }
+      console.log(timeToSend);
+    } else {
+      toast.error("You can only select 3 options !");
+    }
+  };
+
+  const addDay = (item) => {
+    if (dayToSend.length < 3 || dayToSend.includes(item)) {
+      if (!dayToSend.includes(item)) {
+        setDayToSend([...dayToSend, item]);
+      } else {
+        let arr = [...dayToSend];
+        let index = arr.findIndex((value) => {
+          return value == item;
+        });
+
+        arr.splice(index, 1);
+        setDayToSend(arr);
+      }
+      console.log(dayToSend);
+    } else {
+      toast.error("You can only select 3 options !");
+    }
+  };
 
   const headers = {
     "Content-Type": "application/json",
@@ -264,7 +335,34 @@ const UserDashboard = (props) => {
   useEffect(() => {
     getData();
     getUsers();
+    getReady();
   }, []);
+
+  const getReady = async () => {
+    await axios
+      .post(
+        `${process.env.NEXT_PUBLIC_URL}/api/users/single`,
+        {
+          email: user.email,
+        },
+        { headers: headers }
+      )
+      .then(({ data }) => {
+        if (
+          data.Time1 == null ||
+          data.Time2 == null ||
+          data.Time3 == null ||
+          data.day1 == null ||
+          data.day2 == null ||
+          data.day3 == null
+        ) {
+          setReady(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   if (!checked)
     return (
@@ -300,7 +398,7 @@ const UserDashboard = (props) => {
             Click Here to Pay
           </p>
         </div>
-      ) : (
+      ) : ready ? (
         <div className="bg-[#f6f3f2]  min-h-screen ">
           <div className=" flex md:space-x-12 p-2 max-w-7xl mx-auto py-6   ">
             <SecondaryNav />
@@ -365,6 +463,91 @@ const UserDashboard = (props) => {
             phaseSix={phaseSix}
             setPhaseSix={setPhaseSix}
           />
+        </div>
+      ) : (
+        <div>
+          <p className="text-center text-gray-600 italic font-semibold flex flex-col items-center justify-center">
+            Please Select Your Available Time and Days For Meeting
+          </p>
+          <div className="flex justify-center">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Icons8_flat_calendar.svg/512px-Icons8_flat_calendar.svg.png?20230109075240"
+              className="w-28 h-28 my-6"
+              alt=""
+            />
+          </div>
+          <p
+            className="my-4 text-gray-600 italic text-sm underline text-center cursor-pointer"
+            onClick={(e) => setTime(true)}
+          >
+            Click Here to Set
+          </p>
+          <Modal open={time}>
+            <div className="absolute left-[50%] -translate-x-[50%] rounded-md h-[500px] w-[500px] bg-white outline-none  top-[10%] p-4">
+              <div className="flex flex-col items-center ">
+                <div>
+                  <h1 className="text-gray-600 italic text-sm md:text-base px-3  font-semibold">
+                    Please Select Your Available Time and Day Settings
+                  </h1>
+                  <p className="text-center py-4 text-gray-600 italic ">
+                    Select Time{" "}
+                  </p>
+                  <div className="flex gap-3 flex-wrap justify-center">
+                    {timemap.map((item) => (
+                      <div
+                        className={`text-sm hover:bg-blue-500 ${
+                          timeToSend.includes(item) &&
+                          "!bg-blue-500 !text-white"
+                        } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-blue-500 bg-white border shadow-md  cursor-pointer`}
+                        onClick={() => addTime(item)}
+                      >
+                        <p>{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-gray-600 text-xs text-center py-4">
+                    Click On The Time To Select (
+                    <span className="underline">
+                      Note - You can only Select 3 Options
+                    </span>
+                    )
+                  </p>
+
+                  <div>
+                    <p className="text-center py-4 text-gray-600 italic ">
+                      Select Day{" "}
+                    </p>
+                    <div className="flex gap-3 flex-wrap justify-center">
+                      {Day.map((item) => (
+                        <div
+                          className={`text-sm hover:bg-blue-500 ${
+                            dayToSend.includes(item) &&
+                            "!bg-blue-500 !text-white"
+                          } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-blue-500 bg-white border shadow-md  cursor-pointer`}
+                          onClick={() => addDay(item)}
+                        >
+                          <p>{item}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-gray-600 text-xs text-center py-4">
+                      Click On The Time To Select (
+                      <span className="underline">
+                        Note - You can only Select 3 Options
+                      </span>
+                      )
+                    </p>
+                  </div>
+                  <p
+                    onClick={(e) => SendData()}
+                    className="bg-blue-500  text-white py-1.5 w-[100px] text-center mx-auto rounded-md shadow-md font-semibold hover:animate-pulse cursor-pointer mt-6 "
+                  >
+                    Confirm
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
     </>

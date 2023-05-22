@@ -86,7 +86,27 @@ const ModalComponent = ({
                       <div>
                         {" "}
                         {phaseFour ? (
-                          <Bank6 setOpen={setOpen} />
+                          <div>
+                            {phasefive ? (
+                              <div>
+                                {phaseSix ? (
+                                  <Marketing5 setOpen={setOpen} />
+                                ) : (
+                                  <Member2
+                                    setPhaseTwo={setPhaseSix}
+                                    setProgress={setProgress}
+                                    p={100}
+                                  />
+                                )}
+                              </div>
+                            ) : (
+                              <Member1
+                                setPhaseOne={setPhasefive}
+                                setProgress={setProgress}
+                                p={70}
+                              />
+                            )}
+                          </div>
                         ) : (
                           <Bank7
                             setPhaseFour={setPhaseFour}
@@ -253,7 +273,27 @@ const ModalComponent = ({
                   <div>
                     {phaseThree ? (
                       phaseFour ? (
-                        <Marketing5 setOpen={setOpen} />
+                        <div>
+                          {phasefive ? (
+                            <div>
+                              {phaseSix ? (
+                                <Marketing5 setOpen={setOpen} />
+                              ) : (
+                                <Member2
+                                  setPhaseTwo={setPhaseSix}
+                                  setProgress={setProgress}
+                                  p={100}
+                                />
+                              )}
+                            </div>
+                          ) : (
+                            <Member1
+                              setPhaseOne={setPhasefive}
+                              setProgress={setProgress}
+                              p={70}
+                            />
+                          )}
+                        </div>
                       ) : (
                         <Marketing4
                           setPhaseFour={setPhaseFour}

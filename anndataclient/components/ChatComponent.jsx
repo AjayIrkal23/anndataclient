@@ -4,6 +4,7 @@ import ChatMain from "./ChatMain";
 import ChatSend from "./ChatSend";
 import { getConversation, getMessage, newMessage } from "@/services/api";
 import { AuthContext } from "@/Contexts/Auth";
+import { toast } from "react-toastify";
 
 const ChatComponent = ({
   conversation,
@@ -21,6 +22,7 @@ const ChatComponent = ({
   console.log(text);
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
+      toast("New Message");
       setincomingMessage({
         ...data,
         createdAt: new Date(),
