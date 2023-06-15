@@ -98,7 +98,7 @@ const User = () => {
 
   useEffect(() => {
     getData();
-  }, [name]);
+  }, [data]);
 
   return (
     <div className="py-6 max-w-5xl mx-auto">
