@@ -37,13 +37,7 @@ const SecondaryNav = ({ settings }) => {
         <Link
           href={{
             pathname: "/user/settings",
-            query: {
-              email: user.email,
-              type: user.type,
-              token: user.token,
-            },
           }}
-          as={`/user/settings?email=${user.email}&type=${user.type}`}
         >
           <SecondNavbar
             jsx={<Settings />}
@@ -82,13 +76,7 @@ const SecondaryNav = ({ settings }) => {
             <Link
               href={{
                 pathname: "/user/settings",
-                query: {
-                  email: user.email,
-                  type: user.type,
-                  token: user.token,
-                },
               }}
-              as={`/user/settings?email=${user.email}&type=${user.type}`}
             >
               <SecondNavbar
                 jsx={<Settings />}

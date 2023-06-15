@@ -3,10 +3,22 @@ import React, { useContext } from "react";
 import { Check, Point, Target, Thumbs, Tv } from "./svgs";
 import { AuthContext } from "@/Contexts/Auth";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const ProfileCard = ({ item }) => {
-  console.log(item);
-  console.log(item);
+  var encrypter = new (require("encrypter"))(process.env.NEXT_PUBLIC_KEY);
+  const router = useRouter();
+
+  const handleClick = (data) => {
+    router.push({
+      pathname: "/user/profile/profileDetails",
+
+      query: {
+        type: encrypter.encrypt(data?.type),
+        email: encrypter.encrypt(data?.email),
+      },
+    });
+  };
 
   return (
     <>
@@ -101,16 +113,18 @@ const ProfileCard = ({ item }) => {
                     </div>
                   </div>
                 </div>
-                <Link href={`/user/profile/${item?.email} ${item?.type}`}>
-                  <button className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito ">
-                    Express Interest{" "}
-                  </button>
-                </Link>
+                <button
+                  className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito "
+                  onClick={() => handleClick(item)}
+                >
+                  Express Interest{" "}
+                </button>
               </div>
             </div>
           )}
           {item?.type == "Mentor" && (
             <div className="bg-white border border-black/10 hover:border-[#29ABE2]  rounded-md ">
+              {console.log(item)}
               <div className="p-5">
                 <div>
                   <p className="text-[21px] font-nunito tracking-wide">
@@ -214,11 +228,12 @@ const ProfileCard = ({ item }) => {
                     </div>
                   </div>
                 </div>
-                <Link href={`/user/profile/${item?.email} ${item?.type}`}>
-                  <button className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito ">
-                    Express Interest{" "}
-                  </button>
-                </Link>
+                <button
+                  className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito "
+                  onClick={() => handleClick(item)}
+                >
+                  Express Interest{" "}
+                </button>
               </div>
             </div>
           )}
@@ -308,11 +323,12 @@ const ProfileCard = ({ item }) => {
                     </div>
                   </div>
                 </div>
-                <Link href={`/user/profile/${item?.email} ${item?.type}`}>
-                  <button className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito ">
-                    Express Interest{" "}
-                  </button>
-                </Link>
+                <button
+                  className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito "
+                  onClick={() => handleClick(item)}
+                >
+                  Express Interest{" "}
+                </button>
               </div>
             </div>
           )}
@@ -408,11 +424,12 @@ const ProfileCard = ({ item }) => {
                     </div>
                   </div>
                 </div>
-                <Link href={`/user/profile/${item?.email} ${item?.type}`}>
-                  <button className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito ">
-                    Express Interest{" "}
-                  </button>
-                </Link>
+                <button
+                  className="px-16 bg-blue-500 py-2.5 text-white rounded-md shadow-md border-2 border-blue-500 hover:bg-white hover:text-black font-semibold transition-all duration-300 ease-in-out font-nunito "
+                  onClick={() => handleClick(item)}
+                >
+                  Express Interest{" "}
+                </button>
               </div>
             </div>
           )}

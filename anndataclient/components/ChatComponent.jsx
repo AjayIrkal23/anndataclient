@@ -22,7 +22,6 @@ const ChatComponent = ({
   console.log(text);
   useEffect(() => {
     socket.current.on("getMessage", (data) => {
-      toast("New Message");
       setincomingMessage({
         ...data,
         createdAt: new Date(),

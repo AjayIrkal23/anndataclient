@@ -58,7 +58,7 @@ const connections = () => {
             My Connections
           </h1>
           <div className="w-20 h-1 mx-auto my-2 bg-blue-500 rounded-lg  mb-5" />
-          <div className="flex justify-center md:flex-row md:space-x-12 space-y-16 flex-col text-center md:text-base">
+          <div className="flex justify-center md:flex-row md:space-x-12 gap-16 flex-col text-center md:text-base">
             <div className="flex-[0.27] flex flex-col ">
               <div className="">
                 {" "}

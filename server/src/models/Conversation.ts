@@ -12,6 +12,7 @@ interface ConversationAttributes {
 	meetingDate?: string;
 	finished?: boolean;
 	startingLink?: string;
+	Mtd?: string;
 }
 
 export class ConversationInstance extends Model<ConversationAttributes> {
@@ -24,7 +25,8 @@ export class ConversationInstance extends Model<ConversationAttributes> {
 	declare startingLink?: string;
 	declare meetingLink: string;
 	declare meetingDate?: string;
-	declare finished: boolean;
+	declare finished?: boolean;
+	declare Mtd?: string;
 }
 
 ConversationInstance.init(
@@ -67,8 +69,12 @@ ConversationInstance.init(
 			type: DataTypes.STRING,
 			allowNull: true
 		},
-		finished: {
+		Mtd: {
 			type: DataTypes.STRING,
+			allowNull: true
+		},
+		finished: {
+			type: DataTypes.BOOLEAN,
 			allowNull: true
 		}
 	},

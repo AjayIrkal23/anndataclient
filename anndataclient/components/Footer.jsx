@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
@@ -17,30 +18,24 @@ const Footer = () => {
               excepturi quaerat quae ad. Fugit ipsa velit
             </p>
             <div className="w-44 pt-6 md:pt-0">
-              <a className="bg-blue-500 justify-center hover:scale-105 text-white cursor-pointer text-center rounded-lg shadow px-10 py-2 transition-all duration-200 ease-in-out flex items-center">
+              <a
+                className="bg-blue-500 justify-center hover:scale-105 text-white cursor-pointer text-center rounded-lg shadow px-10 py-2 transition-all duration-200 ease-in-out flex items-center"
+                href="mailto:ajayirkal23@gmail.com"
+              >
                 Contact US
               </a>
             </div>
           </div>
           <div className="flex flex-col">
             <div className="flex mt-24 mb-7 md:flex-row justify-between flex-col">
-              <div className="">
-                <p className="text-2xl font-nunito uppercase tracking-wider text-center md:text-base">
-                  Aandata.<span className="text-green-500">Guru</span>
-                </p>
+              <div className="cursor-pointer">
+                <Link href="/">
+                  <p className="text-2xl font-nunito uppercase tracking-wider text-center md:text-base">
+                    Aandata.<span className="text-green-500">Guru</span>
+                  </p>
+                </Link>
               </div>
-              <a className="hidden md:block cursor-pointer text-gray-400 hover:text-white uppercase">
-                About
-              </a>
-              <a className="hidden md:block cursor-pointer text-gray-400 hover:text-white uppercase">
-                Services
-              </a>
-              <a className="hidden md:block cursor-pointer text-gray-400 hover:text-white uppercase">
-                Why us
-              </a>
-              <a className="hidden md:block cursor-pointer text-gray-400 hover:text-white uppercase">
-                Contact
-              </a>
+
               <div className="flex flex-row space-x-8 items-center md:justify-between justify-around md:mt-0 mt-3">
                 <a
                   className="cursor-pointer hover:scale-150 transition-all duration-200 ease-in-out"

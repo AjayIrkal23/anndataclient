@@ -31,6 +31,7 @@ const Bank5 = ({ setPhaseThree, setProgress }) => {
 
   const handleUpload = async (data) => {
     if (file) {
+      toast.loading("Uploading File");
       const data = new FormData();
       data.append("name", file.name);
       data.append("department", user.email);
@@ -52,8 +53,9 @@ const Bank5 = ({ setPhaseThree, setProgress }) => {
               { headers: headers }
             )
             .then((response) => {
-              toast.success("Profile Pic Uploaded Successfully");
-              setProgress(100);
+              toast.dismiss();
+              toast.success("Document  Uploaded Successfully");
+              setProgress(80);
               setPhaseThree(true);
             })
             .catch((error) => {

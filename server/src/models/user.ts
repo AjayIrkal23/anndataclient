@@ -4,13 +4,18 @@ import { config } from '../config/config';
 interface AllUserAttributes {
 	id: string;
 	email?: string;
+	connect?: string;
 	type: string;
 	last?: string;
+	selectedTime?: string;
+	selectedDay?: string;
 	Time?: string;
 	day1?: string;
 	day2?: string;
 	day3?: string;
-
+	dt1?: boolean;
+	dt2?: boolean;
+	dt3?: boolean;
 	ready?: boolean;
 	Time1?: string;
 	Time2?: string;
@@ -22,13 +27,19 @@ export class AllUserInstance extends Model<AllUserAttributes> {
 	declare email: string;
 	declare type: string;
 	declare last: string;
+	declare selectedTime?: string;
+	declare selectedDay?: string;
 	declare Time1?: string;
+	declare connect?: string;
 	declare Time2?: string;
 	declare Time3?: string;
 	declare day1: string;
 	declare day2: string;
 	declare day3: string;
 	declare ready: boolean;
+	declare dt1?: boolean;
+	declare dt2?: boolean;
+	declare dt3?: boolean;
 }
 
 AllUserInstance.init(
@@ -39,6 +50,18 @@ AllUserInstance.init(
 			allowNull: false
 		},
 		email: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		selectedDay: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		selectedTime: {
+			type: DataTypes.STRING,
+			allowNull: true
+		},
+		connect: {
 			type: DataTypes.STRING,
 			allowNull: true
 		},
@@ -72,6 +95,18 @@ AllUserInstance.init(
 		},
 		Time3: {
 			type: DataTypes.STRING,
+			allowNull: true
+		},
+		dt1: {
+			type: DataTypes.BOOLEAN,
+			allowNull: true
+		},
+		dt2: {
+			type: DataTypes.BOOLEAN,
+			allowNull: true
+		},
+		dt3: {
+			type: DataTypes.BOOLEAN,
 			allowNull: true
 		},
 		ready: {

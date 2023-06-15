@@ -14,7 +14,7 @@ import { BankInstance } from '../models/bank';
 import { MarketingInstance } from '../models/marketing';
 import { Op } from 'sequelize';
 
-const Time = ['9:30 Am', '12:00 Pm', '3:00 Pm', '5:00 Pm', '7:00 Pm'];
+const Time = ['9:00 am', '12:00 pm', '3:00 pm', '6:00 pm', '8:00 pm'];
 const Day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 const newMessage = async (req: Request, res: Response, next: NextFunction) => {
@@ -291,6 +291,83 @@ const StartAI = async (req: Request, res: Response, next: NextFunction) => {
 	}
 };
 
+const CreateConnection = async (senderId: any, receiverId: any, Setype: any, ReType: any, meetingTime: any, meetingDate: any) => {
+	const id = uuidv4();
+	const exists = await ConversationInstance.findOne({ where: { members: { [Op.contains]: [receiverId, senderId] } } });
+
+	if (exists) {
+		await axios.get(
+			`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=TEXT&method=SENDMESSAGE&msg=The+member+you+are+trying+to+connect+has+an+active+connection+with+you.&isTemplate=true&header=Connection+Already+Exists+%21&footer=Aanndata.Guru+AI`
+		);
+		return;
+	} else {
+		let members = [senderId, receiverId];
+		const newConversation = await ConversationInstance.create({ id, members, Setype, ReType, meetingTime, meetingDate }).then(async (resp) => {
+			if (ReType == 'Member') {
+				const isUser = await UsersInstance.findOne({ where: { email: receiverId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
+					);
+				}
+			} else if (ReType == 'Mentor') {
+				const isUser = await MentorInstance.findOne({ where: { email: receiverId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
+					);
+				}
+			} else if (ReType == 'Marketing') {
+				const isUser = await MarketingInstance.findOne({ where: { email: receiverId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
+					);
+				}
+			} else {
+				const isUser = await BankInstance.findOne({ where: { email: receiverId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
+					);
+				}
+			}
+
+			if (Setype == 'Member') {
+				const isUser = await UsersInstance.findOne({ where: { email: senderId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
+					);
+				}
+			} else if (Setype == 'Mentor') {
+				const isUser = await MentorInstance.findOne({ where: { email: senderId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
+					);
+				}
+			} else if (Setype == 'Marketing') {
+				const isUser = await MarketingInstance.findOne({ where: { email: senderId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
+					);
+				}
+			} else {
+				const isUser = await BankInstance.findOne({ where: { email: senderId } });
+				if (isUser) {
+					await axios.get(
+						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
+					);
+				}
+			}
+
+			return;
+		});
+	}
+};
+
 const replyMessage = async (req: Request, res: Response, next: NextFunction) => {
 	const { button, mobile, waNumber } = req.body;
 
@@ -330,6 +407,38 @@ const replyMessage = async (req: Request, res: Response, next: NextFunction) => 
 							res.status(200).json({ message: 'Opted Out' });
 						});
 				});
+			// JSON.parse(button).text == 1
+		} else if (JSON.parse(button).text == 1 || JSON.parse(button).text == 2 || JSON.parse(button).text == 3) {
+			if (JSON.parse(button).text == 1) {
+				await AllUserInstance.update({ selectedTime: user?.Time1 }, { where: { email: number } });
+			} else if (JSON.parse(button).text == 2) {
+				await AllUserInstance.update({ selectedTime: user?.Time2 }, { where: { email: number } });
+			} else if (JSON.parse(button).text == 3) {
+				await AllUserInstance.update({ selectedTime: user?.Time3 }, { where: { email: number } });
+			}
+			await axios
+				.get(
+					`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${number}&v=1.1&format=json&msg_type=TEXT&method=SENDMESSAGE&msg=Please+Select+the+time+from+the+given+options+below%0A%0AA+-+${user?.day1}.%0AB+-+${user?.day2}.%0AC+-+${user?.day3}.%0A%0ASelect+the+following+reply+button&isTemplate=true&header=Meeting+Day+selection&footer=Aanndata.Guru+AI`
+				)
+				.then((resp) => {
+					console.log(resp);
+					res.status(200).json({ message: 'Success' });
+				});
+		} else if (JSON.parse(button).text == 'A' || JSON.parse(button).text == 'B' || JSON.parse(button).text == 'C') {
+			if (JSON.parse(button).text == 'A') {
+				await AllUserInstance.update({ selectedDay: user?.day1 }, { where: { email: number } });
+			} else if (JSON.parse(button).text == 'B') {
+				await AllUserInstance.update({ selectedDay: user?.day2 }, { where: { email: number } });
+			} else if (JSON.parse(button).text == 'C') {
+				await AllUserInstance.update({ selectedDay: user?.day3 }, { where: { email: number } });
+			}
+
+			const seUser = await AllUserInstance.findOne({ where: { email: user?.connect } });
+			const newUser = await AllUserInstance.findOne({ where: { email: number } });
+
+			CreateConnection(number, user?.connect, user?.type, seUser?.type, newUser?.selectedTime, newUser?.selectedDay).then((resp) => {
+				res.status(200).json({ message: 'success' });
+			});
 		} else if (text == 'Next') {
 			const existingUser = await AllUserInstance.findOne({ where: { email: number } });
 			if (existingUser?.type == 'Mentor') {
@@ -349,8 +458,17 @@ const replyMessage = async (req: Request, res: Response, next: NextFunction) => 
 				getPerson(existingUser, user);
 				res.status(200).json({ message: 'success' });
 			}
-		} else if (text == 'Connect') {
-			getConnected('Setype', 'receiverId', 'senderId', 'ReType');
+		} else if (JSON.parse(button).text == 'Connect') {
+			const user = await AllUserInstance.findOne({ where: { email: number } });
+			await AllUserInstance.update({ connect: user?.last }, { where: { email: number } });
+
+			await axios
+				.get(
+					`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${mobile}&v=1.1&format=json&msg_type=TEXT&method=SENDMESSAGE&msg=Please+Select+the+time+from+the+given+options+below%0A%0A1+-+${user?.Time1}.%0A2+-+${user?.Time2}.%0A3+-+${user?.Time3}.%0A%0ASelect+the+following+reply+button&isTemplate=true&header=Meeting+time+selection&footer=Aanndata.Guru+AI`
+				)
+				.then((resp) => {
+					res.status(200).json({ message: 'Success' });
+				});
 		} else if (text == 'Start') {
 			await axios
 				.get(
@@ -518,84 +636,6 @@ const gotoSend = async (mobile: any) => {
 			console.log(resp);
 			return true;
 		});
-};
-
-const getConnected = async (Setype: any, receiverId: any, senderId: any, ReType: any) => {
-	const id = uuidv4();
-
-	try {
-		const exists = await ConversationInstance.findOne({ where: { members: { [Op.contains]: [receiverId, senderId] } } });
-
-		if (exists) {
-			console.log('exists');
-		} else {
-			let members = [senderId, receiverId];
-			const newConversation = await ConversationInstance.create({ id, members, Setype, ReType });
-			if (ReType == 'Member') {
-				const isUser = await UsersInstance.findOne({ where: { email: receiverId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
-					);
-				}
-			} else if (ReType == 'Mentor') {
-				const isUser = await MentorInstance.findOne({ where: { email: receiverId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
-					);
-				}
-			} else if (ReType == 'Marketing') {
-				const isUser = await MarketingInstance.findOne({ where: { email: receiverId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
-					);
-				}
-			} else {
-				const isUser = await BankInstance.findOne({ where: { email: receiverId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${senderId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+are+successfully+connected+with+${isUser.name}%2C+Meeting+Link+Will+be+shared+soon%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aadnata.Guru+Team`
-					);
-				}
-			}
-
-			if (Setype == 'Member') {
-				const isUser = await UsersInstance.findOne({ where: { email: senderId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
-					);
-				}
-			} else if (Setype == 'Mentor') {
-				const isUser = await MentorInstance.findOne({ where: { email: senderId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
-					);
-				}
-			} else if (Setype == 'Marketing') {
-				const isUser = await MarketingInstance.findOne({ where: { email: senderId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
-					);
-				}
-			} else {
-				const isUser = await BankInstance.findOne({ where: { email: senderId } });
-				if (isUser) {
-					await axios.get(
-						`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${config.whatsapp_pass}&send_to=${receiverId}&v=1.1&format=json&msg_type=IMAGE&method=SENDMEDIAMESSAGE&caption=You+have+A+new+Connection+-+${isUser.name}%0AMeeting+Link+Will+be+Shared+Shortly.%0ARegards&media_url=https%3A%2F%2Fwww.salesprogress.com%2Fhs-fs%2Fhub%2F53724%2Ffile-1853575215-jpg%2Fimages%2Femployee_connection.jpg&isTemplate=true&footer=Aanndata.Guru`
-					);
-				}
-			}
-
-			console.log('created successfully');
-		}
-	} catch (error) {
-		console.log(error);
-	}
 };
 
 // const gotoSendDay = async (mobile: any) => {

@@ -19,6 +19,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import "react-notifications/lib/notifications.css";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 import { Blocks } from "react-loader-spinner";
 
 const UserDashboard = (props) => {
@@ -38,6 +43,7 @@ const UserDashboard = (props) => {
   const [time, setTime] = useState(false);
   const [timeToSend, setTimeToSend] = useState([]);
   const [dayToSend, setDayToSend] = useState([]);
+
   const router = useRouter();
 
   const {
@@ -49,6 +55,7 @@ const UserDashboard = (props) => {
     setProfiles,
     mainNav,
     setMainNav,
+    newMessageFlag,
   } = useContext(AuthContext);
 
   const SendData = async () => {
@@ -76,7 +83,7 @@ const UserDashboard = (props) => {
     }
   };
 
-  const timemap = ["9:00 am", "12:00 pm", "3:00 pm", "6:00pm", "8:00 pm"];
+  const timemap = ["9:00 am", "12:00 pm", "3:00 pm", "6:00 pm", "8:00 pm"];
   const Day = ["Monday", "Tuesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
   const getUsersInArray = () => {
@@ -129,6 +136,8 @@ const UserDashboard = (props) => {
       toast.error("You can only select 3 options !");
     }
   };
+
+  console.log(profiles);
 
   const addDay = (item) => {
     if (dayToSend.length < 3 || dayToSend.includes(item)) {
@@ -432,10 +441,10 @@ const UserDashboard = (props) => {
                 <p className="text-gray-600 font-semibold ">Invite Friends</p>
                 <p className="text-xs text-center  text-gray-600">
                   We need innovators and disruptors. Know someone who fits the
-                  bill? Invite them to apply and be a part of the network.
+                  bill? Invite them to apply and be a part of the their token.
                 </p>
                 <p className="my-3 text-xs text-[#29ABE2] hover:underline">
-                  Learn More
+                  Coming Soon
                 </p>
               </div>
             </div>

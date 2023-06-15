@@ -10,10 +10,15 @@ router.use(morgan('common'));
 router.use(cors());
 router.use(express.json());
 
-config.db.sync().then(() => {
-	console.info('Connected to Postgresql Database');
-	StartServer();
-});
+config.db
+	.sync()
+	.then(() => {
+		console.info('Connected to Postgresql Database');
+		StartServer();
+	})
+	.catch((err) => {
+		console.log('unable to connect', err);
+	});
 const StartServer = () => {
 	router.use((req, res, next) => {
 		next();

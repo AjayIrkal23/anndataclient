@@ -1,6 +1,7 @@
 import { AuthContext } from "@/Contexts/Auth";
 import axios from "axios";
 import { useContext } from "react";
+import { toast } from "react-hot-toast";
 
 export const ad = async (data) => {
   try {
@@ -21,10 +22,15 @@ export const GetUser = async () => {
 
 export const setConversation = async (data) => {
   try {
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}/api/conversation/add`,
-      data
-    );
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_URL}/api/conversation/add`, data)
+      .then((res) => {
+        if (res?.data?.Status == "Exists") {
+          toast.success("Connection Already Exists");
+        } else {
+          toast.success("Connection Created");
+        }
+      });
   } catch (e) {
     console.log(e.message);
   }

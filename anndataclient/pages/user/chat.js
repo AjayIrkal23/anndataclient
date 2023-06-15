@@ -1,15 +1,21 @@
 import { AuthContext } from "@/Contexts/Auth";
 import ChatComponent from "@/components/ChatComponent";
 import Conversations from "@/components/Conversations";
+
 import SecondaryNav from "@/components/SecondaryNav";
 import { getConversation } from "@/services/api";
 import { Drawer } from "@mui/material";
 import axios from "axios";
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Blocks } from "react-loader-spinner";
 import { toast } from "react-toastify";
+import {
+  NotificationContainer,
+  NotificationManager,
+} from "react-notifications";
 
 const chat = () => {
   const [checked, setChecked] = useState(false);

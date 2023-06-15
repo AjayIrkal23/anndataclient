@@ -6,10 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
-const Name = () => {
+const User = () => {
+  const encrypter = new (require("encrypter"))(process.env.NEXT_PUBLIC_KEY);
   const router = useRouter();
-  const name = router?.query?.name;
+
+  const data = router?.query;
+
   const { user, person, setperson } = useContext(AuthContext);
   const [profile, setProfile] = useState();
   const [timemap, setTimemap] = useState([]);
@@ -17,47 +21,56 @@ const Name = () => {
   const [timeSet, setTimeSet] = useState();
   const [daySet, setDaySet] = useState();
   const [open, setOpen] = useState(false);
-  console.log(profile);
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${user?.token}`,
   };
 
   const getUser = async (item) => {
-    setperson(profile);
-    await setConversation({
-      senderId: user?.email,
-      receiverId: profile?.email,
-      meetingTime: timeSet,
-      meetingDate: daySet,
-      ReType: name?.split(" ")[1],
-      Setype: user?.type,
-    });
-    setOpen(false);
-    router.push({
-      pathname: "/user/chat",
-      query: {
-        text: "Hello, I am Interested to Share My Knowledge with you And Work With You ",
-        active: true,
-      },
-    });
+    if (timeSet && daySet) {
+      setperson(profile);
+      await setConversation({
+        senderId: user?.email,
+        receiverId: profile?.email,
+        meetingTime: timeSet,
+        meetingDate: daySet,
+        ReType: data && encrypter?.decrypt(data.type),
+        Setype: user?.type,
+      });
+      setOpen(false);
+      router.push({
+        pathname: "/user/chat",
+        query: {
+          text: "Hello, I am Interested to Share My Knowledge with you And Work With You ",
+          active: true,
+        },
+      });
+    } else {
+      toast.error("Slots Full or Not Selected!");
+    }
   };
 
   useEffect(() => {
-    getReady();
-  }, []);
+    user && getReady();
+  }, [user]);
+
+  console.log(data);
 
   const getReady = async () => {
     await axios
       .post(
         `${process.env.NEXT_PUBLIC_URL}/api/users/single`,
         {
-          email: user.email,
+          email: data && encrypter?.decrypt(data.email),
         },
         { headers: headers }
       )
       .then(({ data }) => {
-        setDayToMap([data.day1, data.day2, data.day3]);
+        setDayToMap([
+          { day: data?.day1, av: data?.dt1 },
+          { day: data?.day2, av: data?.dt2 },
+          { day: data?.day3, av: data?.dt3 },
+        ]);
         setTimemap([data.Time1, data.Time2, data.Time3]);
       })
       .catch((e) => {
@@ -70,8 +83,8 @@ const Name = () => {
       .post(
         `${process.env.NEXT_PUBLIC_URL}/api/getSingleUser`,
         {
-          email: name?.split(" ")[0],
-          type: name?.split(" ")[1],
+          email: data && encrypter?.decrypt(data.email),
+          type: data && encrypter?.decrypt(data.type),
         },
         { headers: headers }
       )
@@ -116,70 +129,74 @@ const Name = () => {
               </p>
             </div>
 
-            <div className="flex ml-auto mr-6 flex-col justify-center items-center p-1">
-              <div className="flex gap-1 ">
-                {" "}
-                <Link href={`${profile?.linkedIn || profile?.website}`}>
-                  <Image
-                    src="/link.png"
-                    className="rounded-md hover:shadow-xl hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out hover:opacity-90 shadow"
-                    width={30}
-                    height={30}
-                    alt=""
-                  />
-                </Link>
-              </div>
-            </div>
-            <div></div>
+            {profile?.linkedIn ||
+              (profile?.website && (
+                <div className="flex ml-auto mr-6 flex-col justify-center items-center p-1">
+                  <div className="flex gap-1 ">
+                    {" "}
+                    <Link href={`${profile?.linkedIn || profile?.website}`}>
+                      <Image
+                        src="/link.png"
+                        className="rounded-md hover:shadow-xl hover:scale-105 cursor-pointer transition-all duration-200 ease-in-out hover:opacity-90 shadow"
+                        width={30}
+                        height={30}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                </div>
+              ))}
           </div>
-          <div className="py-6 flex justify-evenly p-12 space-x-8">
-            <div className="basis-1/3">
-              <div className="flex gap-1 items-center mb-4">
-                <Image src="/applicant.png" width={20} height={20} alt="" />
-                <p className="text-xs font-semibold tracking-wide  text-black ">
-                  {(profile?.knowledgeFarming && "Knowledge Farming") ||
-                    (profile?.fundingStage && "Funding") ||
-                    (profile?.additionalContact1 && "Additional Contact") ||
-                    (profile?.servicesOffered && "Services Offered")}
-                </p>
-              </div>
-              <ul className={`list-disc text-xs  space-y-4 italic`}>
-                {profile?.servicesOffered ? (
-                  profile?.servicesOffered
-                    .split(",")
-                    .map((item, i) => i > 0 && <li>{item}</li>)
-                ) : profile?.fundingStage ? (
-                  <li>Upto {profile?.fundingStage} INR</li>
-                ) : (
-                  <li>
-                    {profile?.knowledgeFarming ||
-                      (profile?.funding &&
-                        `Upto ${profile?.fundingStage} INR`) ||
-                      profile?.additionalContact1}
-                  </li>
-                )}
-              </ul>
-            </div>
-            {!profile?.servicesOffered && (
+          {false && (
+            <div className="py-6 flex justify-evenly p-12 space-x-8">
               <div className="basis-1/3">
                 <div className="flex gap-1 items-center mb-4">
-                  <Image src="/diamond.png" width={20} height={20} alt="" />
+                  <Image src="/applicant.png" width={20} height={20} alt="" />
                   <p className="text-xs font-semibold tracking-wide  text-black ">
-                    {(profile?.learningAbout && "Learning About") ||
-                      (profile?.workExp && "Work Experience") ||
-                      (profile?.additionalContact2 && "Additional Contact")}
+                    {(profile?.knowledgeFarming && "Knowledge Farming") ||
+                      (profile?.fundingStage && "Funding") ||
+                      (profile?.additionalContact1 && "Additional Contact") ||
+                      (profile?.servicesOffered && "Services Offered")}
                   </p>
                 </div>
-                <ul className="list-disc text-xs space-y-4 italic">
-                  <li>
-                    {profile?.learningAbout ||
-                      (profile?.workExp && `${profile?.workExp}+ Years`) ||
-                      profile?.additionalContact2}
-                  </li>
+                <ul className={`list-disc text-xs  space-y-4 italic`}>
+                  {profile?.servicesOffered ? (
+                    profile?.servicesOffered
+                      .split(",")
+                      .map((item, i) => i > 0 && <li>{item}</li>)
+                  ) : profile?.fundingStage ? (
+                    <li>Upto {profile?.fundingStage} INR</li>
+                  ) : (
+                    <li>
+                      {profile?.knowledgeFarming ||
+                        (profile?.funding &&
+                          `Upto ${profile?.fundingStage} INR`) ||
+                        profile?.additionalContact1}
+                    </li>
+                  )}
                 </ul>
               </div>
-            )}
-          </div>
+              {!profile?.servicesOffered && (
+                <div className="basis-1/3">
+                  <div className="flex gap-1 items-center mb-4">
+                    <Image src="/diamond.png" width={20} height={20} alt="" />
+                    <p className="text-xs font-semibold tracking-wide  text-black ">
+                      {(profile?.learningAbout && "Learning About") ||
+                        (profile?.workExp && "Work Experience") ||
+                        (profile?.additionalContact2 && "Additional Contact")}
+                    </p>
+                  </div>
+                  <ul className="list-disc text-xs space-y-4 italic">
+                    <li>
+                      {profile?.learningAbout ||
+                        (profile?.workExp && `${profile?.workExp}+ Years`) ||
+                        profile?.additionalContact2}
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
           <div>
             <p className="p-4 text-xs text-gray-600">
               {profile?.aboutMe ||
@@ -207,17 +224,20 @@ const Name = () => {
           <div>
             <div className="py-6">
               <div className="flex justify-center text-center ">
-                <div>
-                  {" "}
-                  <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
-                    Interest
-                  </p>
-                  <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
-                    <p className="border border-[#29ABE2] px-3 py-0.5">
-                      {profile?.interest || profile?.usertype}
-                    </p>
-                  </div>
-                </div>
+                {profile?.interest ||
+                  (profile?.usertype && (
+                    <div>
+                      {" "}
+                      <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
+                        Interest
+                      </p>
+                      <div className="px-4 text-[10px] flex gap-5 text-[#29ABE2]">
+                        <p className="border border-[#29ABE2] px-3 py-0.5">
+                          {profile?.interest || profile?.usertype}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 <div>
                   {" "}
                   <p className="font-semibold px-4 text-gray-600 tracking-wide my-1  ">
@@ -250,7 +270,7 @@ const Name = () => {
               >
                 <p>Connect Now </p>
               </button>
-              <Modal open={open}>
+              <Modal open={open} onClose={() => setOpen(false)}>
                 <div className="absolute left-[50%] -translate-x-[50%] rounded-md   bg-white outline-none  top-[10%] p-4">
                   <div className="flex flex-col items-center ">
                     <div>
@@ -281,19 +301,34 @@ const Name = () => {
                           Select Day{" "}
                         </p>
                         <div className="flex gap-3 flex-wrap justify-center">
-                          {Day.map((item) => (
-                            <div
-                              className={`text-sm hover:bg-blue-500 ${
-                                daySet == item && "!bg-blue-500 !text-white"
-                              } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-blue-500 bg-white border shadow-md  cursor-pointer`}
-                              onClick={() => setDaySet(item)}
-                            >
-                              <p>{item}</p>
-                            </div>
-                          ))}
+                          {Day.map((item, i) =>
+                            !item.av ? (
+                              <div
+                                className={`text-sm hover:bg-blue-500 ${
+                                  daySet == item.day &&
+                                  "!bg-blue-500 !text-white"
+                                } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-blue-500 bg-white border shadow-md  cursor-pointer`}
+                                onClick={() => setDaySet(item.day)}
+                              >
+                                <p>{item.day}</p>
+                              </div>
+                            ) : (
+                              <div
+                                className={`text-sm hover:bg-red-500 ${
+                                  daySet == item && "!bg-red-500 !text-white"
+                                } px-4 py-1.5 rounded-md cursor hover:text-white font-semibold border-red-500 bg-white border shadow-md  cursor-pointer`}
+                              >
+                                <p>Full</p>
+                              </div>
+                            )
+                          )}
                         </div>
                         <p className="text-gray-600 text-xs text-center py-4">
                           Click On The Time To Select
+                        </p>
+                        <p className="text-gray-600 text-xs text-center ">
+                          If the slots are taken please try again next day or
+                          week
                         </p>
                       </div>
                       <p
@@ -321,7 +356,7 @@ const Name = () => {
               Learn More
             </p>
           </div>
-          <div className="border p-2 flex flex-col justify-center items-center w-full space-y-3 rounded-md cursor-pointer hover:shadow-xl shadow-blue-200 transition-all duration-200 ease-in-out ">
+          <div className="border p-2 flex flex-col justify-center items-center w-full space-y-3 rounded-md cursor-pointer hover:shadow-xl shadow-blue-200 transition-all duration-200 ease-in-out mt-3">
             <Image src="/invitation.png" width={120} height={120} alt="p-4" />
             <p className="text-gray-600 font-semibold ">Invite Friends</p>
             <p className="text-xs text-center  text-gray-600">
@@ -338,4 +373,4 @@ const Name = () => {
   );
 };
 
-export default Name;
+export default User;

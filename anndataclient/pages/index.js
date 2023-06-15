@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { NotificationManager } from "react-notifications";
 
 export default function Home() {
   const router = useRouter();

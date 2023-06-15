@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import NProgress from "nprogress";
+import { NotificationContainer } from "react-notifications";
 
 Router.onRouteChangeStart = () => {
   // console.log('onRouteChangeStart triggered');
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }) {
   return (
     <AuthProvider>
       <div className="">
+        <NotificationContainer />
         <div className="sticky top-0 z-[999]">
           <Navbar />
         </div>
