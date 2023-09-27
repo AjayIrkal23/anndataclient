@@ -25,7 +25,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:4000");
+    socket.current = io("http://54.83.109.185:4000");
   }, []);
 
   const userLogin = (user) => {
