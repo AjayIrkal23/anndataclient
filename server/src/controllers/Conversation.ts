@@ -12,6 +12,7 @@ import { MentorInstance } from '../models/mentor';
 import { MarketingInstance } from '../models/marketing';
 import { BankInstance } from '../models/bank';
 import { AllUserInstance } from '../models/user';
+import items from 'razorpay/dist/types/items';
 const shortUrl = require('node-url-shortener');
 var getDaysArray = function () {
 	const s = new Date(Date.now());
@@ -42,9 +43,13 @@ const preMeet = async (req: Request, res: Response, next: NextFunction) => {
 				console.log(new Date(d).toDateString(), item.Mtd, hours);
 
 				if (item.meetingLink && new Date(d).toDateString() == item.Mtd && hours <= 3 && item.finished != true) {
+					console.log('hello');
+
 					item.members.map(async (number) => {
+						console.log('hello2');
 						shortUrl.short(item.meetingLink, async (err: any, url: any) => {
-							console.log(url.split('/'));
+							console.log(url);
+							console.log(err);
 							await axios
 								.get(
 									`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${
@@ -57,7 +62,7 @@ const preMeet = async (req: Request, res: Response, next: NextFunction) => {
 									)}%3D%3D&isTemplate=true&header=Meeting+Link+for+upcoming+Meeting&footer=Aanndata.Guru+AI`
 								)
 								.then(async (response) => {
-									console.log(response);
+									console.log(response.data.phone);
 									await ConversationInstance.update({ finished: true }, { where: { id: item.id } });
 								});
 						});
@@ -88,7 +93,25 @@ const getMeeting = async (req: Request, res: Response, next: NextFunction) => {
 		d.setDate(d.getDate());
 		console.log(new Date(d).toDateString());
 		exists?.map(async (item) => {
-			if (item.meetingLink && new Date(d).toDateString() == item.Mtd) {
+			if (!item.meetingLink && new Date(d).toDateString() == item.Mtd) {
+				axios
+					.post(`https://api.zoom.us/v2/users/me/meetings`, meetingDetails, { headers: headers })
+					.then(async (resp) => {
+						await ConversationInstance.update({ meetingLink: resp.data.join_url }, { where: { id: item.id } });
+					})
+					.then(async (resps) => {
+						item.members.map(async (number) => {
+							await axios.get(
+								`https://media.smsgupshup.com/GatewayAPI/rest?userid=${config.whatsapp_id}&password=${
+									config.whatsapp_pass
+								}&send_to=${number}&v=1.1&format=json&msg_type=TEXT&method=SENDMESSAGE&msg=Please+note+that+you+have+an+Meeting+allocated+today.+Meeting+link+will+be+shared+shortly+before+meeting+takes+place%0AConnection+ID+-++${
+									item.id
+								}%0AMeeting+Schedule+-+${
+									new Date(d).toDateString() + ' ' + item.meetingTime.split(' ')[0] + ' ' + item?.meetingTime.split(' ')[1]
+								}+d&isTemplate=true&header=Reminder+for+your+aandata.Guru+zoom+Meeting&footer=Aanndata.Guru+AI`
+							);
+						});
+					});
 			}
 		});
 		res.status(200).json('Success');

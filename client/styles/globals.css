@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Crete+Round:ital@1&family=Gemunu+Libre:wght@800&family=Kanit:wght@200&family=Londrina+Shadow&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ms+Madi&family=Nunito:wght@600&family=Oswald:wght@700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Train+One&display=swap');
+
+
+
+:root {
+  --primary: rgba(31, 209, 253, 0.4);
+  --secondary: orange;
+  --tertiary: rgba(31, 209, 253, 0.6);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 3px solid var(--secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--tertiary);
+}
+
+
+
+
+@layer components{
+    .navItems{
+        @apply md:hover:!text-[#fd7e14] group-hover:text-gray-500 cursor-pointer transition-all duration-200 ease-in-out italic
+    }
+
+    body {
+        overflow: visible !important;
+      }
+
+    .btn2 span:first-child{
+        transform: translateX(-101%);
+        transition: transform .3s ease-in      ;
+        -webkit-transform: translateX(-101%);
+        -moz-transform: translateX(-101%);
+        -ms-transform: translateX(-101%);
+        -o-transform: translateX(-101%);
+}
+    .btn2:hover span{
+        transform: translateX(0)
+      }
+}
+
+
+.player-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+  }
+  
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+
+

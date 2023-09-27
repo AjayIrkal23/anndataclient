@@ -5,6 +5,7 @@ import UserData from '../controllers/UserData';
 import authenticate, { adminAuthenticate } from '../middleware/authenticate';
 import Conversation from '../controllers/Conversation';
 import Message from '../controllers/Message';
+import Test from '../controllers/Test';
 
 const router = express.Router();
 
@@ -23,9 +24,14 @@ router.post('/refreshProfile', authenticate, UserData.refreshProfile);
 router.get('/getAllUsers', UserData.getAllUsers);
 router.get('/sendAI', Message.sendUsers);
 router.get('/startAI', Message.StartAI);
+router.post('/CheckActive', Test.CheckActive);
+router.post('/createTest', Test.createTest);
+router.post('/updateTest', Test.updateTest);
+router.post('/getTests', Test.getTests);
 router.post('/getSingleUser', authenticate, UserData.getSingleUser);
 router.get('/getAllFilter', authenticate, UserData.getAllFilter);
 router.post('/payment', authenticate, UserData.Payment);
+router.get('/startTest', Test.TestStart);
 router.post('/conversation/add', Conversation.newConversation);
 router.post('/conversation/get', Conversation.getConversation);
 router.post('/conversation/All', Conversation.getAllConversation);
