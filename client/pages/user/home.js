@@ -474,14 +474,14 @@ const UserDashboard = (props) => {
           />
         </div>
       ) : (
-        <div>
+        <div c>
           <p className="text-center text-gray-600 italic font-semibold flex flex-col items-center justify-center">
             Please Select Your Available Time and Days For Meeting
           </p>
           <div className="flex justify-center">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Icons8_flat_calendar.svg/512px-Icons8_flat_calendar.svg.png?20230109075240"
-              className="w-28 h-28 my-6"
+              className="w-28 h-28 md:w-36 md:h-36 my-6"
               alt=""
             />
           </div>
