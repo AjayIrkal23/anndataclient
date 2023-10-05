@@ -6,15 +6,10 @@
 
 
 :root {
-  --primary: rgba(31, 209, 253, 0.4);
   --secondary: orange;
-  --tertiary: rgba(31, 209, 253, 0.6);
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--secondary) var(--primary);
-}
+
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
