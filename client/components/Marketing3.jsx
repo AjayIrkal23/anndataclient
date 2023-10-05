@@ -46,7 +46,7 @@ const Marketing3 = ({ setPhaseThree, setProgress }) => {
       data1.append("file", file);
       toast.loading("Uploading File");
       await axios
-        .post(`https://react-sop.onrender.com/file/upload`, data1)
+        .post(`${process.env.NEXT_PUBLIC_BUCKET}/file/upload`, data1)
         .then(async (res) => {
           setFileuploaded(res.data);
           await axios

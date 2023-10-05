@@ -37,7 +37,7 @@ const Bank7 = ({ setPhaseFour, setProgress }) => {
       data.append("file", file);
       toast.loading("Uploading File");
       await axios
-        .post(`https://react-sop.onrender.com/file/upload`, data)
+        .post(`${process.env.NEXT_PUBLIC_BUCKET}/file/upload`, data)
         .then(async (res) => {
           setFileuploaded(res.data);
           await axios
