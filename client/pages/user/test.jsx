@@ -355,14 +355,16 @@ const test = () => {
                     <div className="player-wrapper md:hidden">
                       <ReactPlayer
                         className="react-player"
-                        url="https://youtu.be/7kozfFPKwjE"
+                        url="https://youtu.be/W6CbPAvAFsg
+                        "
                         width="100%"
                         height="100%"
                       />
                     </div>
                     <ReactPlayer
                       className="hidden md:inline-block"
-                      url="https://youtu.be/7kozfFPKwjE"
+                      url="https://youtu.be/W6CbPAvAFsg
+                      "
                     />
                   </>
                 )}
@@ -372,14 +374,14 @@ const test = () => {
                     <div className="player-wrapper md:hidden">
                       <ReactPlayer
                         className="react-player"
-                        url="https://youtu.be/e-Dp0YZe65A"
+                        url="https://youtu.be/8i5Jbi9Q1u8"
                         width="100%"
                         height="100%"
                       />
                     </div>
                     <ReactPlayer
                       className="hidden md:inline-block"
-                      url="https://youtu.be/e-Dp0YZe65A"
+                      url="https://youtu.be/8i5Jbi9Q1u8"
                     />
                   </>
                 )}
@@ -389,14 +391,16 @@ const test = () => {
                     <div className="player-wrapper md:hidden">
                       <ReactPlayer
                         className="react-player"
-                        url="https://youtu.be/l7I0_ZG2Q-E"
+                        url="https://youtu.be/E4YWmGFG3Q8
+                        "
                         width="100%"
                         height="100%"
                       />
                     </div>
                     <ReactPlayer
                       className="hidden md:inline-block"
-                      url="https://youtu.be/l7I0_ZG2Q-E"
+                      url="https://youtu.be/E4YWmGFG3Q8
+                      "
                     />
                   </>
                 )}
