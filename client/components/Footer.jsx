@@ -12,10 +12,38 @@ const Footer = () => {
             </h1>
           </div>
           <div className="flex mt-8 flex-col md:flex-row md:justify-between">
-            <p className="w-full md:w-2/3 text-white">
-              1st Floor, Block No. 6, RS No. 122 Bengeri Village, <br /> Shabari
-              Nagar, Keshwapur, Hubballi-580032.
-            </p>
+            <div className="w-full md:w-2/3 text-white">
+              <p className="">
+                Address :{" "}
+                <span>
+                  1st Floor, Block No. 6, RS No. 122 Bengeri Village, <br />{" "}
+                  Shabari Nagar, Keshwapur, Hubballi-580032.
+                </span>
+              </p>
+
+              <div className="my-2">
+                {" "}
+                <p className="">
+                  Phone Number :{" "}
+                  <a href="tel:++917718869099">+91 771886 9099</a>
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 my-2">
+                {" "}
+                <div>
+                  {" "}
+                  <Link href={"/tc"}>
+                    <p className=" text-white  italic  ">Terms & Conditions</p>
+                  </Link>
+                </div>
+                <div>
+                  {" "}
+                  <Link href={"/privacyPolicy"}>
+                    <p className=" text-white  italic  ">Privacy Policy</p>
+                  </Link>
+                </div>
+              </div>
+            </div>
 
             <div className="w-44 pt-6 md:pt-0">
               <a
@@ -32,22 +60,6 @@ const Footer = () => {
                 <Link href="/">
                   <p className="text-2xl font-nunito uppercase tracking-wider text-center md:text-base">
                     AandataGuru.<span className="text-green-500">AI</span>
-                  </p>
-                </Link>
-              </div>
-              <div>
-                {" "}
-                <Link href={"/tc"}>
-                  <p className="text-xs text-white underline italic my-2 ml-3 text-center">
-                    Terms & Conditions
-                  </p>
-                </Link>
-              </div>
-              <div>
-                {" "}
-                <Link href={"/privacyPolicy"}>
-                  <p className="text-xs text-white underline italic my-2 ml-3 text-center">
-                    Privacy Policy
                   </p>
                 </Link>
               </div>
