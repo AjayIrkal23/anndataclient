@@ -224,7 +224,7 @@ const login = () => {
           <div className="relative overflow-hidden md:flex md:w-1/2 bg-gradient-to-tr md:h-auto h-[300px]  from-[#39B54A] to-[#29ABE2] i md:justify-around  items-center ">
             <div className="flex flex-col items-center h-full justify-center">
               <h1 className="text-white font-bold text-4xl font-sans">
-              AandataGuru.<span className="text-green-500">AI</span>
+                AandataGuru.<span className="text-green-500">AI</span>
               </h1>
               <p className="text-white mt-1">
                 Connect People Together Professionally
@@ -344,7 +344,6 @@ const login = () => {
                   Forgot Password ?
                 </span>
               )}
-              ``
             </form>
           </div>
         </div>

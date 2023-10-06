@@ -147,7 +147,7 @@ const signup = () => {
           <div className="relative overflow-hidden  md:w-1/2 bg-gradient-to-tr md:h-auto h-[300px] md:hidden  from-[#39B54A] to-[#29ABE2] i md:justify-around  items-center ">
             <div className="flex flex-col items-center h-full justify-center">
               <h1 className="text-white font-bold text-4xl font-sans">
-              AandataGuru.<span className="text-green-500">AI</span>
+                AandataGuru.<span className="text-green-500">AI</span>
               </h1>
               <p className="text-white mt-1 max-w-[350px] text-xs text-center">
                 True networking does not mean meeting people; it means becoming
@@ -170,7 +170,8 @@ const signup = () => {
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white ">
             <form className="bg-white px-3" onSubmit={handleSubmit(onSubmit)}>
               <h1 className="text-gray-800 font-bold text-2xl mb-1 text-center md:text-left">
-                Welcome to AandataGuru.<span className="text-green-500">AI</span>
+                Welcome to AandataGuru.
+                <span className="text-green-500">AI</span>
               </h1>
               <p className="text-sm font-normal text-gray-600 mb-7 text-center md:text-left">
                 Register Now
@@ -306,7 +307,11 @@ const signup = () => {
                   <option value="Bank">Bank</option>
                 </select>
               </div>
-
+              <Link href={"/tc"}>
+                <p className="text-xs text-gray-700 underline italic my-2 ml-3">
+                  Please Read T&C Before Registering
+                </p>
+              </Link>
               <button
                 type="submit"
                 className="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2 hover:animate-pulse"
@@ -318,7 +323,7 @@ const signup = () => {
           <div className="relative overflow-hidden md:flex md:w-1/2 bg-gradient-to-tr md:h-auto h-[300px] hidden  from-[#39B54A] to-[#29ABE2] i md:justify-around  items-center ">
             <div className="flex flex-col items-center h-full justify-center">
               <h1 className="text-white font-bold text-4xl font-sans">
-              AandataGuru.<span className="text-green-500">AI</span>
+                AandataGuru.<span className="text-green-500">AI</span>
               </h1>
               <p className="text-white mt-1 max-w-[350px] text-xs text-center">
                 True networking does not mean meeting people; it means becoming

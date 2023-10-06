@@ -12,11 +12,11 @@ const Footer = () => {
             </h1>
           </div>
           <div className="flex mt-8 flex-col md:flex-row md:justify-between">
-            <p className="w-full md:w-2/3 text-gray-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti,
-              ipsa illum? Facilis neque ab voluptas illum minus dolorum natus
-              excepturi quaerat quae ad. Fugit ipsa velit
+            <p className="w-full md:w-2/3 text-white">
+              1st Floor, Block No. 6, RS No. 122 Bengeri Village, <br /> Shabari
+              Nagar, Keshwapur, Hubballi-580032.
             </p>
+
             <div className="w-44 pt-6 md:pt-0">
               <a
                 className="bg-blue-500 justify-center hover:scale-105 text-white cursor-pointer text-center rounded-lg shadow px-10 py-2 transition-all duration-200 ease-in-out flex items-center"
@@ -32,6 +32,22 @@ const Footer = () => {
                 <Link href="/">
                   <p className="text-2xl font-nunito uppercase tracking-wider text-center md:text-base">
                     AandataGuru.<span className="text-green-500">AI</span>
+                  </p>
+                </Link>
+              </div>
+              <div>
+                {" "}
+                <Link href={"/tc"}>
+                  <p className="text-xs text-white underline italic my-2 ml-3 text-center">
+                    Terms & Conditions
+                  </p>
+                </Link>
+              </div>
+              <div>
+                {" "}
+                <Link href={"/privacyPolicy"}>
+                  <p className="text-xs text-white underline italic my-2 ml-3 text-center">
+                    Privacy Policy
                   </p>
                 </Link>
               </div>
